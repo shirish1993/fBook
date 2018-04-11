@@ -26,7 +26,7 @@ export function loginUser() {
         dispatch(setUser({
           displayName: result.user.displayName,
           email: result.user.email,
-          photoURL: result.user.photoURL,
+          photorl: result.user.photorl,
         }))
       }
     })

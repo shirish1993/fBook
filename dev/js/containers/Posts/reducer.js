@@ -4,7 +4,7 @@ import {
 
 const currentTime = new Date();
 const initialState = {
-  posts: {},
+  posts: [],
   currentTime: currentTime.getTime(),
 };
 
@@ -12,7 +12,7 @@ function postsReducer(state = initialState, action) {
   switch (action.type) {
     case SET_POSTS:
       return Object.assign({}, state, {
-        posts: action.posts
+        posts: [].concat(state.posts, action.posts)
       });
     default:
       return state;
