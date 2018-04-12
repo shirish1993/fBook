@@ -3,7 +3,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {setToastDetails} from './actions'
 
-class UserList extends Component {
+class Toast extends Component {
 
     render() {
         return this.props.toast.message ? (<div onClick={() => this.props.setToastDetails(null, null)}>
@@ -23,4 +23,4 @@ function matchDispatchToProps(dispatch){
     return bindActionCreators({setToastDetails: setToastDetails}, dispatch);
 }
 
-export default connect(mapStateToProps, matchDispatchToProps)(UserList);
+export default connect(mapStateToProps, matchDispatchToProps)(Toast);

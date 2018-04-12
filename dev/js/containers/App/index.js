@@ -7,7 +7,7 @@ import Login from '../Login/Loadable';
 
 import Toast from '../Toast';
 
-class UserList extends Component {
+class App extends Component {
 
     render() {
         return (<div>
@@ -29,4 +29,4 @@ function matchDispatchToProps(dispatch){
     return bindActionCreators({}, dispatch);
 }
 
-export default connect(mapStateToProps, matchDispatchToProps)(UserList);
+export default connect(mapStateToProps, matchDispatchToProps)(App);

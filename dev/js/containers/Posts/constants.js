@@ -1,1 +1,1 @@
-export const SET_POSTS = 'app/Post/SET_POSTS';
+export const SET_POSTS = 'app/Posts/SET_POSTS';

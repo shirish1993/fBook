@@ -3,7 +3,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { fetchPosts, createNewPost } from './actions'
 
-class UserList extends Component {
+import Comments from '../Comments/Loadable';
+
+class Posts extends Component {
     constructor(props) {
         super(props);
 
@@ -26,7 +28,7 @@ class UserList extends Component {
                 <button onClick={() => this.newPost()}>create new post</button>
             </div>
             <div>{posts.map(function(elem, index) {
-                return elem.content;
+                return <div key={"post-" + index}>{elem.content}<Comments resourceId={elem.uniqueId} /></div>;
             })
         }</div></div>);
     }
@@ -47,4 +49,4 @@ function matchDispatchToProps(dispatch) {
     }, dispatch);
 }
 
-export default connect(mapStateToProps, matchDispatchToProps)(UserList);
+export default connect(mapStateToProps, matchDispatchToProps)(Posts);

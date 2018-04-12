@@ -3,7 +3,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {loginUser} from './actions'
 
-class UserList extends Component {
+class Login extends Component {
 
     render() {
         return <div onClick={() => this.props.loginUser()}>login via fb</div>;
@@ -21,4 +21,4 @@ function matchDispatchToProps(dispatch){
     return bindActionCreators({loginUser: loginUser}, dispatch);
 }
 
-export default connect(mapStateToProps, matchDispatchToProps)(UserList);
+export default connect(mapStateToProps, matchDispatchToProps)(Login);
