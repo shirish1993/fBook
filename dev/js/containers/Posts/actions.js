@@ -21,7 +21,7 @@ export function fetchPosts(currentTime) {
     app.database().ref('posts')
       .orderByChild('postTime')
       .endAt(currentTime)
-      .limitToFirst(10)
+      .limitToFirst(50)
       .once('value')
       .then((snapshot) => {
         if(snapshot.val()) {

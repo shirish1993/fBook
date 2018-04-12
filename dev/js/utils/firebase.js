@@ -1,11 +1,10 @@
 import firebase from 'firebase';
 const config = {
-  apiKey: "AIzaSyCB-iCKJGRXITuE6DFKNV8qx1AWUhNY5aw",
-  authDomain: "fb-comm.firebaseapp.com",
-  databaseURL: "https://fb-comm.firebaseio.com",
-  projectId: "fb-comm",
-  storageBucket: "fb-comm.appspot.com",
-  messagingSenderId: "76040958616"
+  apiKey: process.env.REACT_API_KEY,
+  authDomain: process.env.REACT_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_DATABASE_URL,
+  storageBucket: process.env.REACT_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_SENDER_ID,
 };
 
 const app = firebase.initializeApp(config);

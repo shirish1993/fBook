@@ -33,7 +33,7 @@ export function fetchComments(resourceId, currentTime) {
     app.database().ref('comments/' + resourceId)
       .orderByChild('postTime')
       .endAt(currentTime)
-      .limitToFirst(10)
+      .limitToFirst(50)
       .once('value')
       .then((snapshot) => {
         if(snapshot.val()) {
