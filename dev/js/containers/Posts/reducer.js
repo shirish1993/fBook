@@ -12,7 +12,7 @@ function postsReducer(state = initialState, action) {
   switch (action.type) {
     case SET_POSTS:
       return Object.assign({}, state, {
-        posts: [].concat(state.posts, action.posts)
+        posts: [].concat(action.posts, state.posts)
       });
     default:
       return state;

@@ -11,6 +11,10 @@ body {
   background: #fafafa;
 }
 
+ul {
+  padding: 0;
+}
+
 .clearfix:before,
 .clearfix:after {
   display: block;
@@ -31,6 +35,7 @@ body {
   font-size: 21px;
   color: #fff;
   width: 100%;
+  z-index: 999;
   top: 0px;
   left: 0px;
   padding: 10px;

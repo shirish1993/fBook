@@ -10,9 +10,28 @@
   left: calc(50% - 150px);
   animation-name: slideUp;
   animation-duration: 1s;
+  &:before {
+    float: left;
+    font-size: 32px;
+    position: absolute;
+    left: 10px;
+    top: 4px;
+  }
+  &-error {
+    background-color: #ad0000;
+    &:before {
+      content: 'x';
+    }
+  }
+  &-info {
+    background-color: #4b62a0;
+    &:before {
+      content: '!';
+    }
+  }
 }
 
-@keyframes example {
+@keyframes slideUp {
     from {bottom: -200px;}
     to {bottom: 20px;}
 }

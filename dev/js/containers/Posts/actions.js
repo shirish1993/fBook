@@ -28,7 +28,7 @@ export function fetchPosts(currentTime) {
           const snapshotValue = snapshot.val();
           var result = [];
           for(var i in snapshotValue) {
-            result.push(Object.assign({}, snapshotValue[i], {
+            result.unshift(Object.assign({}, snapshotValue[i], {
                 uniqueId: i
               }));
           }
@@ -49,8 +49,9 @@ export function fetchPosts(currentTime) {
 }
 
 export function createNewPost(content, userDetails, currentTime) {
-  dispatch(setLoader(true, CREATE_NEW_POST));
+  
   return (dispatch) => {
+    dispatch(setLoader(true, CREATE_NEW_POST));
     const timeNow = new Date(),
       newEntry = {
           content: content,

@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 
 import CommentItem from '../../components/CommentItem';
+import Loader from '../../components/Loader';
+
+import { FETCH_COMMENTS, CREATE_NEW_COMMENT } from './constants';
 
 require('../../../scss/comments.scss');
 
@@ -19,7 +22,8 @@ class Comments extends Component {
     renderComments() {
         const { comments, commentText } = this.props.comments,
             resourceId = this.props.resourceId,
-            currentTime = new Date();
+            currentTime = new Date(),
+            { isLoading, loaderType } = this.props.loader;
 
         let timeElapsed = null;
         return (<div><ul>
@@ -40,8 +44,8 @@ class Comments extends Component {
                 value={commentText[resourceId] ? commentText[resourceId] : ""}>
             </textarea>
             <button 
-                className="cmnts__new-btn"
-                onClick={() => this.props.createNewComment(resourceId, commentText[resourceId] ? commentText[resourceId] : "", this.props.login.userDetails, currentTime.getTime())}>
+                className={"cmnts__new-btn" + ((!isLoading || loaderType != CREATE_NEW_COMMENT+resourceId) ? "" : " cmnts__new-btn-ldng")}
+                onClick={() => (!isLoading || loaderType != CREATE_NEW_COMMENT+resourceId) ? this.props.createNewComment(resourceId, commentText[resourceId] ? commentText[resourceId] : "", this.props.login.userDetails, currentTime.getTime()) : null}>
                 Post
             </button>
         </div>
@@ -51,14 +55,15 @@ class Comments extends Component {
     render() {
         const { comments, commentText } = this.props.comments,
             resourceId = this.props.resourceId,
-            currentTime = new Date();
+            currentTime = new Date(),
+            { isLoading, loaderType } = this.props.loader;
 
         return (comments[resourceId] ? 
             this.renderComments() : 
-            <button 
+            ( !isLoading || loaderType != (FETCH_COMMENTS + resourceId) ? <button 
                 className="cmnts__load-btn" 
                 onClick={() => this.props.fetchComments(resourceId, currentTime.getTime())}>Comments
-            </button>);
+            </button> : <Loader size="small" />));
     }
 
 }
@@ -68,6 +73,7 @@ function mapStateToProps(state) {
         comments: state.comments,
         login: state.login,
         session: state.session,
+        loader: state.loader,
     };
 }
 

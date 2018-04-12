@@ -1,10 +1,11 @@
 import {
-  SET_COMMENTS, CHANGE_COMMENT_TEXT,
+  SET_COMMENTS, CHANGE_COMMENT_TEXT, FETCH_COMMENTS, CREATE_NEW_COMMENT,
 } from './constants';
 
 import { app } from '../../utils/firebase';
 
 import { setToastDetails } from '../Toast/actions';
+import { setLoader } from '../Loader/actions';
 
 export function setComments(resourceId, comments, currentTime) {
   return (dispatch) => {
@@ -28,6 +29,7 @@ export function changeCommentText(text, resourceId) {
 
 export function fetchComments(resourceId, currentTime) {
   return (dispatch) => {
+    dispatch(setLoader(true, FETCH_COMMENTS + resourceId));
     app.database().ref('comments/' + resourceId)
       .orderByChild('postTime')
       .endAt(currentTime)
@@ -43,14 +45,17 @@ export function fetchComments(resourceId, currentTime) {
               }));
           }
 
+          dispatch(setLoader(false, null));
           dispatch(setComments(resourceId, result, result[result.length-1].postTime));
         }
         else {
+          dispatch(setLoader(false, null));
           dispatch(setComments(resourceId, [], currentTime)); 
-          dispatch(setToastDetails("no comment at this moment", "info"));
+          dispatch(setToastDetails("No comment for this post", "info"));
         }
       })
       .catch((error) => {
+        dispatch(setLoader(false, null));
         dispatch(setToastDetails("Unable to fetch data", "error"));
       });
   };
@@ -58,22 +63,23 @@ export function fetchComments(resourceId, currentTime) {
 
 export function createNewComment(resourceId, content, userDetails, currentTime) {
   return (dispatch) => {
+    dispatch(setLoader(true, CREATE_NEW_COMMENT + resourceId));
     const timeNow = new Date();
+    const newEntry = {
+      content: content,
+      email: userDetails.email,
+      displayName: userDetails.displayName,
+      photoUrl: userDetails.photoUrl,
+      postTime: timeNow.getTime()
+    };
+
     app.database().ref("comments/" + resourceId)
-    .push({
-        content: content,
-        email: userDetails.email,
-        displayName: userDetails.displayName,
-        photoUrl: userDetails.photoUrl,
-        postTime: timeNow.getTime()
-    })
+    .push(newEntry)
     .then((snap) => {
-      dispatch(setComments(resourceId, {content: content,
-        email: userDetails.email,
-        displayName: userDetails.displayName,
-        photoUrl: userDetails.photoUrl,
-        uniqueId: snap.key,
-        postTime: timeNow.getTime()}, currentTime))
+      dispatch(setComments(resourceId, Object.assign({}, newEntry, {
+        uniqueId: snap.key
+      }), currentTime));
+      dispatch(setLoader(false, null));
     });
 
     

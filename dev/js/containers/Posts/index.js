@@ -10,6 +10,8 @@ import { setUser } from '../Login/actions';
 import UserDetails from '../../components/UserDetails';
 import PostItem from '../../components/PostItem';
 
+import Loader from '../../components/Loader';
+
 import { FETCH_POSTS, CREATE_NEW_POST } from './constants';
 
 require('../../../scss/posts.scss');
@@ -49,7 +51,11 @@ class Posts extends Component {
             <button className="lgt__btn" onClick={() => this.props.setUser(null)}>Logout</button>
             <div className="posts__new-cntnr">
                 <textarea placeholder="Whats up!" className="posts__new-inpt" ref={(elem) => {this.postTextArea=elem} }></textarea>
-                <button className="posts__new-btn" onClick={() => this.newPost()}>Post</button>
+                <button 
+                    className={"posts__new-btn " +  ((!isLoading || loaderType != CREATE_NEW_POST) ? "" : "posts__new-btn-ldng") }
+                    onClick={() => (!isLoading || loaderType != CREATE_NEW_POST) ? this.newPost() : null}>
+                    { (!isLoading || loaderType != CREATE_NEW_POST) ? "Post" : "Loading" }
+                </button>
             </div>
             <div>{ !isLoading || loaderType != FETCH_POSTS ? posts.map(function(elem, index) {
                 timeElapsed = moment(elem.postTime);
@@ -57,7 +63,7 @@ class Posts extends Component {
                         key={"post-" + index}
                         timeElapsed={timeElapsed.fromNow()}
                         postDetails={elem} />;
-            }) : <span>Loading</span>
+            }) : <div><Loader /></div>
         }</div></div>);
     }
 

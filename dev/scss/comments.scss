@@ -10,7 +10,6 @@
   }
   &__new {
     &-cntnr {
-      padding-left: 40px;
       position: relative;
     }
     &-inpt {
@@ -30,7 +29,7 @@
       height: 24px;
       border-radius: 50%;
       top: 2px;
-      left: 47px;
+      left: 7px;
     }
     &-btn {
       float: right;
@@ -45,6 +44,10 @@
       font-size: 13px;
       text-transform: uppercase;
       height: 28px;
+      &-ldng {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
     }
   }
 }
