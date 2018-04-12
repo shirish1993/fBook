@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { fetchPosts, createNewPost } from './actions'
+import moment from 'moment';
+
+import { fetchPosts, createNewPost } from './actions';
+import { setSessionTimer } from '../Session/actions';
 
 import Comments from '../Comments/Loadable';
 
@@ -18,17 +21,29 @@ class Posts extends Component {
 
     componentDidMount() {
         this.props.fetchPosts(this.props.posts.currentTime);
+
+        // call forceUpdate every 1 minute
+        // to update time elapsed
+        if(!this.props.session.sessionTimer) {
+            let sessionTimer = setInterval(() => {
+                this.props.setSessionTimer(this.props.session.sessionTimer);
+            }, 60000);
+            this.props.setSessionTimer(sessionTimer);
+        }
+
     }
     render() {
         const { posts } = this.props.posts;
 
+        let timeElapsed = null;
         return (<div>
             <div>
                 <textarea ref={(elem) => {this.postTextArea=elem} }></textarea>
                 <button onClick={() => this.newPost()}>create new post</button>
             </div>
             <div>{posts.map(function(elem, index) {
-                return <div key={"post-" + index}>{elem.content}<Comments resourceId={elem.uniqueId} /></div>;
+                timeElapsed = moment(elem.postTime);
+                return <div key={"post-" + index}>{elem.content}<span>{timeElapsed.fromNow()}</span><Comments resourceId={elem.uniqueId} /></div>;
             })
         }</div></div>);
     }
@@ -38,14 +53,16 @@ class Posts extends Component {
 function mapStateToProps(state) {
     return {
         posts: state.posts,
-        login: state.login
+        login: state.login,
+        session: state.session,
     };
 }
 
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({ 
         fetchPosts: fetchPosts,
-        createNewPost: createNewPost 
+        createNewPost: createNewPost,
+        setSessionTimer: setSessionTimer,
     }, dispatch);
 }
 

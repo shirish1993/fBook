@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import moment from 'moment';
+
 import { fetchComments, createNewComment, changeCommentText } from './actions'
 
 class Comments extends Component {
@@ -15,9 +17,11 @@ class Comments extends Component {
             resourceId = this.props.resourceId,
             currentTime = new Date();
 
+        let timeElapsed = null;
         return (<div><ul>
             {comments[resourceId].map(function(elem, index) {
-                return <li key={"comment-" + elem.uniqueId}>{elem.content}</li>
+                timeElapsed = moment(elem.postTime);
+                return <li key={"comment-" + elem.uniqueId}>{elem.content}<span>{timeElapsed.fromNow()}</span></li>
             })}
         </ul>
         <textarea 
@@ -39,7 +43,8 @@ class Comments extends Component {
 function mapStateToProps(state) {
     return {
         comments: state.comments,
-        login: state.login
+        login: state.login,
+        session: state.session,
     };
 }
 
