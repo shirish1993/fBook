@@ -46,7 +46,7 @@ class Comments extends Component {
             <button 
                 className={"cmnts__new-btn" + ((!isLoading || loaderType != CREATE_NEW_COMMENT+resourceId) ? "" : " cmnts__new-btn-ldng")}
                 onClick={() => (!isLoading || loaderType != CREATE_NEW_COMMENT+resourceId) ? this.props.createNewComment(resourceId, commentText[resourceId] ? commentText[resourceId] : "", this.props.login.userDetails, currentTime.getTime()) : null}>
-                Post
+                Comment
             </button>
         </div>
         </div>);
@@ -62,7 +62,7 @@ class Comments extends Component {
             this.renderComments() : 
             ( !isLoading || loaderType != (FETCH_COMMENTS + resourceId) ? <button 
                 className="cmnts__load-btn" 
-                onClick={() => this.props.fetchComments(resourceId, currentTime.getTime())}>Comments
+                onClick={() => this.props.fetchComments(resourceId, currentTime.getTime())}>Show Comments
             </button> : <Loader size="small" />));
     }
 
