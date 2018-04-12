@@ -25,6 +25,7 @@ class Posts extends Component {
 
     newPost() {
         this.props.createNewPost(this.postTextArea.value, this.props.login.userDetails, this.props.posts.currentTime);
+        this.postTextArea.value = "";
     }
 
     componentDidMount() {
