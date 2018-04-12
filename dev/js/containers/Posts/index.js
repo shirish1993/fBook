@@ -10,6 +10,8 @@ import { setUser } from '../Login/actions';
 import UserDetails from '../../components/UserDetails';
 import PostItem from '../../components/PostItem';
 
+import { FETCH_POSTS, CREATE_NEW_POST } from './constants';
+
 require('../../../scss/posts.scss');
 
 class Posts extends Component {
@@ -37,7 +39,8 @@ class Posts extends Component {
 
     }
     render() {
-        const { posts } = this.props.posts;
+        const { posts } = this.props.posts,
+            { isLoading, loaderType } = this.props.loader;
 
         let timeElapsed = null;
         return (<div className="posts__cntnr clearfix">
@@ -48,13 +51,13 @@ class Posts extends Component {
                 <textarea placeholder="Whats up!" className="posts__new-inpt" ref={(elem) => {this.postTextArea=elem} }></textarea>
                 <button className="posts__new-btn" onClick={() => this.newPost()}>Post</button>
             </div>
-            <div>{posts.map(function(elem, index) {
+            <div>{ !isLoading || loaderType != FETCH_POSTS ? posts.map(function(elem, index) {
                 timeElapsed = moment(elem.postTime);
                 return <PostItem
                         key={"post-" + index}
                         timeElapsed={timeElapsed.fromNow()}
                         postDetails={elem} />;
-            })
+            }) : <span>Loading</span>
         }</div></div>);
     }
 
@@ -65,6 +68,7 @@ function mapStateToProps(state) {
         posts: state.posts,
         login: state.login,
         session: state.session,
+        loader: state.loader,
     };
 }
 
