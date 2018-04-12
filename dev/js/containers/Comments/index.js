@@ -31,9 +31,20 @@ class Comments extends Component {
                             timeElapsed={timeElapsed.fromNow()} />;
             })}
         </ul>
-        <textarea 
-            onChange={(e) => this.props.changeCommentText(e.target.value, resourceId)} value={commentText[resourceId] ? commentText[resourceId] : ""}></textarea>
-        <button onClick={() => this.props.createNewComment(resourceId, commentText[resourceId] ? commentText[resourceId] : "", this.props.login.userDetails, currentTime.getTime())}>post comment</button>
+        <div className="cmnts__new-cntnr">
+            <img src={this.props.login.userDetails.photoUrl} className="cmnts__new-img" />
+            <textarea 
+                className="cmnts__new-inpt"
+                placeholder="What's your thought?"
+                onChange={(e) => this.props.changeCommentText(e.target.value, resourceId)} 
+                value={commentText[resourceId] ? commentText[resourceId] : ""}>
+            </textarea>
+            <button 
+                className="cmnts__new-btn"
+                onClick={() => this.props.createNewComment(resourceId, commentText[resourceId] ? commentText[resourceId] : "", this.props.login.userDetails, currentTime.getTime())}>
+                Post
+            </button>
+        </div>
         </div>);
     }
 
