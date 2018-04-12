@@ -3,6 +3,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
+import CommentItem from '../../components/CommentItem';
+
+require('../../../scss/comments.scss');
+
 import { fetchComments, createNewComment, changeCommentText } from './actions'
 
 class Comments extends Component {
@@ -21,7 +25,10 @@ class Comments extends Component {
         return (<div><ul>
             {comments[resourceId].map(function(elem, index) {
                 timeElapsed = moment(elem.postTime);
-                return <li key={"comment-" + elem.uniqueId}>{elem.content}<span>{timeElapsed.fromNow()}</span></li>
+                return <CommentItem
+                            key={"comment-" + elem.uniqueId}
+                            commentDetails={elem}
+                            timeElapsed={timeElapsed.fromNow()} />;
             })}
         </ul>
         <textarea 
@@ -35,7 +42,12 @@ class Comments extends Component {
             resourceId = this.props.resourceId,
             currentTime = new Date();
 
-        return (comments[resourceId] ? <div>{this.renderComments()}</div> : <button onClick={() => this.props.fetchComments(resourceId, currentTime.getTime())}>load comments</button>);
+        return (comments[resourceId] ? 
+            this.renderComments() : 
+            <button 
+                className="cmnts__load-btn" 
+                onClick={() => this.props.fetchComments(resourceId, currentTime.getTime())}>Comments
+            </button>);
     }
 
 }

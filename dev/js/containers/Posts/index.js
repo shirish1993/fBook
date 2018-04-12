@@ -5,8 +5,12 @@ import moment from 'moment';
 
 import { fetchPosts, createNewPost } from './actions';
 import { setSessionTimer } from '../Session/actions';
+import { setUser } from '../Login/actions';
 
-import Comments from '../Comments/Loadable';
+import UserDetails from '../../components/UserDetails';
+import PostItem from '../../components/PostItem';
+
+require('../../../scss/posts.scss');
 
 class Posts extends Component {
     constructor(props) {
@@ -36,14 +40,20 @@ class Posts extends Component {
         const { posts } = this.props.posts;
 
         let timeElapsed = null;
-        return (<div>
-            <div>
-                <textarea ref={(elem) => {this.postTextArea=elem} }></textarea>
-                <button onClick={() => this.newPost()}>create new post</button>
+        return (<div className="posts__cntnr clearfix">
+            <UserDetails 
+                userDetails={this.props.login.userDetails} />
+            <button className="lgt__btn" onClick={() => this.props.setUser(null)}>Logout</button>
+            <div className="posts__new-cntnr">
+                <textarea placeholder="Whats up!" className="posts__new-inpt" ref={(elem) => {this.postTextArea=elem} }></textarea>
+                <button className="posts__new-btn" onClick={() => this.newPost()}>Post</button>
             </div>
             <div>{posts.map(function(elem, index) {
                 timeElapsed = moment(elem.postTime);
-                return <div key={"post-" + index}>{elem.content}<span>{timeElapsed.fromNow()}</span><Comments resourceId={elem.uniqueId} /></div>;
+                return <PostItem
+                        key={"post-" + index}
+                        timeElapsed={timeElapsed.fromNow()}
+                        postDetails={elem} />;
             })
         }</div></div>);
     }
@@ -63,6 +73,7 @@ function matchDispatchToProps(dispatch) {
         fetchPosts: fetchPosts,
         createNewPost: createNewPost,
         setSessionTimer: setSessionTimer,
+        setUser: setUser,
     }, dispatch);
 }
 

@@ -7,10 +7,13 @@ import Login from '../Login/Loadable';
 
 import Toast from '../Toast';
 
+require('../../../scss/style.scss');
+
 class App extends Component {
 
     render() {
         return (<div>
+            <div className="hdr">fBook</div>
             <Toast />
             { this.props.login.userDetails ?
             <Posts /> : <Login /> }

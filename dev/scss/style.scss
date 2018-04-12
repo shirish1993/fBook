@@ -1,5 +1,39 @@
-$primary: #006699;
+* {
+  font-family: sans-serif;
+}
 
-h2 {
-	color: $primary;
+.clearfix {
+  zoom: 1;
+}
+
+body {
+  margin: 0;
+  background: #fafafa;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: block;
+  visibility: hidden;
+  overflow: hidden;
+  width: 0;
+  height: 0;
+  content: '\0020';
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.hdr {
+  background-color: #4B63A0;
+  text-align: center;
+  font-size: 21px;
+  color: #fff;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+  padding: 10px;
+  position: fixed;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }

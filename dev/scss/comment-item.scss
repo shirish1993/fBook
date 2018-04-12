@@ -1,0 +1,33 @@
+.cmnt {
+    &__usr {
+        &-img {
+            height: 32px;
+            border-radius: 50%;
+        }
+        &-name {
+            font-size: 15px;
+            color: #444;
+        }
+        &-time {
+            font-size: 11px;
+            color: #777;
+            margin-top: 3px;
+        }
+        &-rght{
+            vertical-align: top;
+            display: inline-block;
+            margin-left: 10px;
+        }
+    }
+    &__cntnr-item {
+        background-color: #fafafa;
+        padding: 10px;
+        margin-bottom: 3px;
+    }
+    &__cntnt {
+        font-size: 15px;
+        color: #111;
+        margin: 15px 0 5px;
+    }
+
+}

@@ -1,0 +1,18 @@
+.toast {
+  background: #333;
+  position: fixed;
+  bottom: 20px;
+  color: #fff;
+  font-size: 15px;
+  padding: 15px;
+  width: 300px;
+  text-align: center;
+  left: calc(50% - 150px);
+  animation-name: slideUp;
+  animation-duration: 1s;
+}
+
+@keyframes example {
+    from {bottom: -200px;}
+    to {bottom: 20px;}
+}
